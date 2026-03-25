@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import '../utils/timeago_formatter.dart';
 
 /// Duration extensions on [int].
@@ -66,8 +68,7 @@ extension DurationAgoX on Duration {
   /// 2.days.ago       // "2 days ago"
   /// 1.hours.ago      // "1 hour ago"
   /// ```
-  String get ago =>
-      TimeAgoFormatter.format(DateTime.now().subtract(this));
+  String get ago => TimeAgoFormatter.format(DateTime.now().subtract(this));
 
   /// Returns a long relative time string for a future date offset by this duration.
   ///
@@ -78,8 +79,7 @@ extension DurationAgoX on Duration {
   /// 2.days.fromNow    // "in 2 days"
   /// 3.hours.fromNow   // "in 3 hours"
   /// ```
-  String get fromNow =>
-      TimeAgoFormatter.format(DateTime.now().add(this));
+  String get fromNow => TimeAgoFormatter.format(DateTime.now().add(this));
 
   /// Short version of [ago]: returns compact label like `"5m"`, `"2d"`.
   ///
@@ -155,5 +155,52 @@ extension DurationExtension on Duration {
           : '${inMinutes}m';
     }
     return '${inSeconds}s';
+  }
+
+  // ─────────────────────────────────────────
+  // Countdown
+  // ─────────────────────────────────────────
+
+  /// Counts down from [inSeconds] to `0`, calling [onTick] every second.
+  ///
+  /// Supports a completion callback via [onDone] and can be cancelled via
+  /// the returned [StreamSubscription].
+  ///
+  /// Example:
+  /// ```dart
+  /// 10.seconds.countdown(
+  ///   onTick: (value) => print(value), // 10 → 9 → ... → 0
+  ///   onDone: () => print("Done!"),
+  /// );
+  /// ```
+  StreamSubscription<int> countdown({
+    required void Function(int value) onTick,
+    void Function()? onDone,
+  }) {
+    int remaining = inSeconds;
+
+    return Stream.periodic(const Duration(seconds: 1))
+        .take(inSeconds + 1)
+        .map((e) => e as int? ?? 0)
+        .listen(
+      (_) {
+        onTick(remaining);
+        if (remaining == 0) onDone?.call();
+        remaining--;
+      },
+    );
+  }
+
+  /// Returns a stream emitting countdown values every second.
+  ///
+  /// Example:
+  /// ```dart
+  /// 10.seconds.countdownStream().listen(print);
+  /// ```
+  Stream<int> countdownStream() async* {
+    for (int i = inSeconds; i >= 0; i--) {
+      yield i;
+      await Future.delayed(const Duration(seconds: 1));
+    }
   }
 }

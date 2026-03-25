@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+- **Feature**: Added top-level `timeAgo(date)` function identical to the popular `timeago` package.
+- **Documentation**: Updated `README.md` to showcase the new concise getter API (`timeAgo`, `fromNow`).
+
 ## 1.1.0
 
 * Upgraded `timeAgo` into a production-level utility (`TimeAgoFormatter`, `TimeAgoStrings`).

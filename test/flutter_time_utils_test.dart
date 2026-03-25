@@ -15,10 +15,12 @@ void main() {
     test('minutes', () => expect(10.minutes, const Duration(minutes: 10)));
     test('hours', () => expect(2.hours, const Duration(hours: 2)));
     test('days', () => expect(3.days, const Duration(days: 3)));
-    test('milliseconds', () =>
-        expect(500.milliseconds, const Duration(milliseconds: 500)));
-    test('arithmetic composes', () =>
-        expect(1.hours + 30.minutes, const Duration(hours: 1, minutes: 30)));
+    test('milliseconds',
+        () => expect(500.milliseconds, const Duration(milliseconds: 500)));
+    test(
+        'arithmetic composes',
+        () => expect(
+            1.hours + 30.minutes, const Duration(hours: 1, minutes: 30)));
   });
 
   // ─────────────────────────────────────────
@@ -37,8 +39,8 @@ void main() {
       expect(1.minutes.isLongerThan(2.minutes), isFalse);
     });
 
-    test('isShorterThan', () =>
-        expect(1.seconds.isShorterThan(1.minutes), isTrue));
+    test('isShorterThan',
+        () => expect(1.seconds.isShorterThan(1.minutes), isTrue));
 
     group('formatted', () {
       test('seconds only', () => expect(45.seconds.formatted, '45s'));
@@ -59,8 +61,8 @@ void main() {
     });
 
     group('fromNow', () {
-      test('5.minutes.fromNow',
-          () => expect(5.minutes.fromNow, 'in 5 minutes'));
+      test(
+          '5.minutes.fromNow', () => expect(5.minutes.fromNow, 'in 5 minutes'));
       test('3.hours.fromNow', () => expect(3.hours.fromNow, 'in 3 hours'));
       test('2.days.fromNow', () => expect(2.days.fromNow, 'in 2 days'));
     });
@@ -83,9 +85,12 @@ void main() {
   group('formatDate', () {
     final date = DateTime(2026, 3, 25, 14, 5, 7);
 
-    test('dd MMM yyyy', () => expect(formatDate(date, 'dd MMM yyyy'), '25 Mar 2026'));
-    test('MMMM d, yyyy', () => expect(formatDate(date, 'MMMM d, yyyy'), 'March 25, 2026'));
-    test('MM/dd/yyyy', () => expect(formatDate(date, 'MM/dd/yyyy'), '03/25/2026'));
+    test('dd MMM yyyy',
+        () => expect(formatDate(date, 'dd MMM yyyy'), '25 Mar 2026'));
+    test('MMMM d, yyyy',
+        () => expect(formatDate(date, 'MMMM d, yyyy'), 'March 25, 2026'));
+    test('MM/dd/yyyy',
+        () => expect(formatDate(date, 'MM/dd/yyyy'), '03/25/2026'));
     test('yy', () => expect(formatDate(date, 'yy'), '26'));
     test('HH:mm:ss', () => expect(formatDate(date, 'HH:mm:ss'), '14:05:07'));
     test('hh:mm a PM', () => expect(formatDate(date, 'hh:mm a'), '02:05 PM'));
@@ -116,153 +121,226 @@ void main() {
 
     // ── Long, numeric (default) ───────────
     group('long numeric (default)', () {
-      test('just now < 5s', () => expect(
-          TimeAgoFormatter.format(past(const Duration(seconds: 3)), now: ref),
-          'Just now'));
+      test(
+          'just now < 5s',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(seconds: 3)),
+                  now: ref),
+              'Just now'));
 
-      test('30 seconds ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(seconds: 30)), now: ref),
-          '30 seconds ago'));
+      test(
+          '30 seconds ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(seconds: 30)),
+                  now: ref),
+              '30 seconds ago'));
 
-      test('1 minute ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(minutes: 1)), now: ref),
-          '1 minute ago'));
+      test(
+          '1 minute ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(minutes: 1)),
+                  now: ref),
+              '1 minute ago'));
 
-      test('45 minutes ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(minutes: 45)), now: ref),
-          '45 minutes ago'));
+      test(
+          '45 minutes ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(minutes: 45)),
+                  now: ref),
+              '45 minutes ago'));
 
-      test('1 hour ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(hours: 1)), now: ref),
-          '1 hour ago'));
+      test(
+          '1 hour ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(hours: 1)), now: ref),
+              '1 hour ago'));
 
-      test('5 hours ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(hours: 5)), now: ref),
-          '5 hours ago'));
+      test(
+          '5 hours ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(hours: 5)), now: ref),
+              '5 hours ago'));
 
-      test('1 day ago (numeric)', () => expect(
-          TimeAgoFormatter.format(past(const Duration(hours: 25)), now: ref),
-          '1 day ago'));
+      test(
+          '1 day ago (numeric)',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(hours: 25)),
+                  now: ref),
+              '1 day ago'));
 
-      test('3 days ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 3)), now: ref),
-          '3 days ago'));
+      test(
+          '3 days ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 3)), now: ref),
+              '3 days ago'));
 
-      test('1 week ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 8)), now: ref),
-          '1 week ago'));
+      test(
+          '1 week ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 8)), now: ref),
+              '1 week ago'));
 
-      test('3 weeks ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 21)), now: ref),
-          '3 weeks ago'));
+      test(
+          '3 weeks ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 21)), now: ref),
+              '3 weeks ago'));
 
-      test('1 month ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 35)), now: ref),
-          '1 month ago'));
+      test(
+          '1 month ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 35)), now: ref),
+              '1 month ago'));
 
-      test('2 months ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 65)), now: ref),
-          '2 months ago'));
+      test(
+          '2 months ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 65)), now: ref),
+              '2 months ago'));
 
-      test('1 year ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 370)), now: ref),
-          '1 year ago'));
+      test(
+          '1 year ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 370)),
+                  now: ref),
+              '1 year ago'));
 
-      test('2 years ago', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 800)), now: ref),
-          '2 years ago'));
+      test(
+          '2 years ago',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 800)),
+                  now: ref),
+              '2 years ago'));
     });
 
     // ── Long, non-numeric ─────────────────
     group('long non-numeric', () {
-      test('yesterday', () => expect(
-          TimeAgoFormatter.format(past(const Duration(hours: 25)),
-              numeric: false, now: ref),
-          'Yesterday'));
+      test(
+          'yesterday',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(hours: 25)),
+                  numeric: false, now: ref),
+              'Yesterday'));
 
-      test('tomorrow', () => expect(
-          TimeAgoFormatter.format(future(const Duration(hours: 25)),
-              numeric: false, now: ref),
-          'Tomorrow'));
+      test(
+          'tomorrow',
+          () => expect(
+              TimeAgoFormatter.format(future(const Duration(hours: 25)),
+                  numeric: false, now: ref),
+              'Tomorrow'));
 
-      test('days ago still numeric', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 3)),
-              numeric: false, now: ref),
-          '3 days ago'));
+      test(
+          'days ago still numeric',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 3)),
+                  numeric: false, now: ref),
+              '3 days ago'));
     });
 
     // ── Future, long ──────────────────────
     group('future long', () {
-      test('in 5 minutes', () => expect(
-          TimeAgoFormatter.format(future(const Duration(minutes: 5)), now: ref),
-          'in 5 minutes'));
+      test(
+          'in 5 minutes',
+          () => expect(
+              TimeAgoFormatter.format(future(const Duration(minutes: 5)),
+                  now: ref),
+              'in 5 minutes'));
 
-      test('in 2 hours', () => expect(
-          TimeAgoFormatter.format(future(const Duration(hours: 2)), now: ref),
-          'in 2 hours'));
+      test(
+          'in 2 hours',
+          () => expect(
+              TimeAgoFormatter.format(future(const Duration(hours: 2)),
+                  now: ref),
+              'in 2 hours'));
 
-      test('in 1 day (numeric)', () => expect(
-          TimeAgoFormatter.format(future(const Duration(hours: 25)), now: ref),
-          'in 1 day'));
+      test(
+          'in 1 day (numeric)',
+          () => expect(
+              TimeAgoFormatter.format(future(const Duration(hours: 25)),
+                  now: ref),
+              'in 1 day'));
 
-      test('in 2 days', () => expect(
-          TimeAgoFormatter.format(future(const Duration(days: 2)), now: ref),
-          'in 2 days'));
+      test(
+          'in 2 days',
+          () => expect(
+              TimeAgoFormatter.format(future(const Duration(days: 2)),
+                  now: ref),
+              'in 2 days'));
     });
 
     // ── Short format ──────────────────────
     group('short past', () {
-      test('now', () => expect(
-          TimeAgoFormatter.format(past(const Duration(seconds: 3)),
-              short: true, now: ref),
-          'now'));
+      test(
+          'now',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(seconds: 3)),
+                  short: true, now: ref),
+              'now'));
 
-      test('30s', () => expect(
-          TimeAgoFormatter.format(past(const Duration(seconds: 30)),
-              short: true, now: ref),
-          '30s'));
+      test(
+          '30s',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(seconds: 30)),
+                  short: true, now: ref),
+              '30s'));
 
-      test('5m', () => expect(
-          TimeAgoFormatter.format(past(const Duration(minutes: 5)),
-              short: true, now: ref),
-          '5m'));
+      test(
+          '5m',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(minutes: 5)),
+                  short: true, now: ref),
+              '5m'));
 
-      test('3h', () => expect(
-          TimeAgoFormatter.format(past(const Duration(hours: 3)),
-              short: true, now: ref),
-          '3h'));
+      test(
+          '3h',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(hours: 3)),
+                  short: true, now: ref),
+              '3h'));
 
-      test('3d', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 3)),
-              short: true, now: ref),
-          '3d'));
+      test(
+          '3d',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 3)),
+                  short: true, now: ref),
+              '3d'));
 
-      test('1w', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 8)),
-              short: true, now: ref),
-          '1w'));
+      test(
+          '1w',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 8)),
+                  short: true, now: ref),
+              '1w'));
 
-      test('1mo', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 35)),
-              short: true, now: ref),
-          '1mo'));
+      test(
+          '1mo',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 35)),
+                  short: true, now: ref),
+              '1mo'));
 
-      test('1y', () => expect(
-          TimeAgoFormatter.format(past(const Duration(days: 370)),
-              short: true, now: ref),
-          '1y'));
+      test(
+          '1y',
+          () => expect(
+              TimeAgoFormatter.format(past(const Duration(days: 370)),
+                  short: true, now: ref),
+              '1y'));
     });
 
     group('short future (+prefix)', () {
-      test('+5m', () => expect(
-          TimeAgoFormatter.format(future(const Duration(minutes: 5)),
-              short: true, now: ref),
-          '+5m'));
+      test(
+          '+5m',
+          () => expect(
+              TimeAgoFormatter.format(future(const Duration(minutes: 5)),
+                  short: true, now: ref),
+              '+5m'));
 
-      test('+2d', () => expect(
-          TimeAgoFormatter.format(future(const Duration(days: 2)),
-              short: true, now: ref),
-          '+2d'));
+      test(
+          '+2d',
+          () => expect(
+              TimeAgoFormatter.format(future(const Duration(days: 2)),
+                  short: true, now: ref),
+              '+2d'));
     });
   });
 
@@ -272,18 +350,30 @@ void main() {
   group('getTimeAgo (legacy)', () {
     final now = DateTime.now();
 
-    test('just now', () =>
-        expect(getTimeAgo(now.subtract(const Duration(seconds: 3))), 'Just now'));
-    test('seconds ago', () =>
-        expect(getTimeAgo(now.subtract(const Duration(seconds: 30))), '30 seconds ago'));
-    test('1 minute ago', () =>
-        expect(getTimeAgo(now.subtract(const Duration(minutes: 1))), '1 minute ago'));
-    test('hours ago', () =>
-        expect(getTimeAgo(now.subtract(const Duration(hours: 5))), '5 hours ago'));
-    test('yesterday', () =>
-        expect(getTimeAgo(now.subtract(const Duration(hours: 25))), '1 day ago'));
-    test('days ago', () =>
-        expect(getTimeAgo(now.subtract(const Duration(days: 4))), '4 days ago'));
+    test(
+        'just now',
+        () => expect(
+            getTimeAgo(now.subtract(const Duration(seconds: 3))), 'Just now'));
+    test(
+        'seconds ago',
+        () => expect(getTimeAgo(now.subtract(const Duration(seconds: 30))),
+            '30 seconds ago'));
+    test(
+        '1 minute ago',
+        () => expect(getTimeAgo(now.subtract(const Duration(minutes: 1))),
+            '1 minute ago'));
+    test(
+        'hours ago',
+        () => expect(
+            getTimeAgo(now.subtract(const Duration(hours: 5))), '5 hours ago'));
+    test(
+        'yesterday',
+        () => expect(
+            getTimeAgo(now.subtract(const Duration(hours: 25))), '1 day ago'));
+    test(
+        'days ago',
+        () => expect(
+            getTimeAgo(now.subtract(const Duration(days: 4))), '4 days ago'));
   });
 
   // ─────────────────────────────────────────
@@ -298,8 +388,10 @@ void main() {
     test('hours + minutes',
         () => expect(formatDuration(1.hours + 30.minutes), '1h 30m'));
     test('days only', () => expect(formatDuration(1.days), '1d'));
-    test('days + hours', () => expect(formatDuration(1.days + 6.hours), '1d 6h'));
-    test('negative duration', () => expect(formatDuration(-30.seconds), '-30s'));
+    test('days + hours',
+        () => expect(formatDuration(1.days + 6.hours), '1d 6h'));
+    test(
+        'negative duration', () => expect(formatDuration(-30.seconds), '-30s'));
     test('zero duration', () => expect(formatDuration(Duration.zero), '0s'));
   });
 
@@ -308,10 +400,15 @@ void main() {
   // ─────────────────────────────────────────
   group('DateTimeExtension', () {
     test('isToday', () => expect(DateTime.now().isToday, isTrue));
-    test('isYesterday', () =>
-        expect(DateTime.now().subtract(const Duration(days: 1)).isYesterday, isTrue));
-    test('isTomorrow', () =>
-        expect(DateTime.now().add(const Duration(days: 1)).isTomorrow, isTrue));
+    test(
+        'isYesterday',
+        () => expect(
+            DateTime.now().subtract(const Duration(days: 1)).isYesterday,
+            isTrue));
+    test(
+        'isTomorrow',
+        () => expect(
+            DateTime.now().add(const Duration(days: 1)).isTomorrow, isTrue));
 
     test('startOfDay', () {
       final d = DateTime(2026, 3, 25, 14, 30);

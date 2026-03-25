@@ -21,7 +21,7 @@
 /// print(DateTime.now().isToday);                  // true
 /// print(someDate.timeAgo);                        // "3 days ago"
 /// print(someDate.timeAgoShort);                   // "3d"
-/// 
+///
 /// // Top-level TimeAgo (like `timeago` package)
 /// print(timeAgo(someDate));                       // "3 days ago"
 /// print(timeAgo(futureDate, short: true));        // "+2h"

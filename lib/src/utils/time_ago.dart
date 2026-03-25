@@ -3,7 +3,7 @@ import 'timeago_formatter.dart';
 /// Returns a human-readable relative time string from [date] to now.
 ///
 /// This provides a familiar top-level function API similar to the popular
-/// `timeago` package. 
+/// `timeago` package.
 ///
 /// Parameters:
 /// - [short] — compact single-unit label, e.g. `"5m"`, `"2h"`, `"3d"`.

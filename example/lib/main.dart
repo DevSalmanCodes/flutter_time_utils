@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_time_utils/flutter_time_utils.dart';
 
@@ -35,6 +37,41 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool _isSleeping = false;
   String _lastAction = '—';
+
+  // ── Countdown state ──────────────────────────
+  static const int _countdownDuration = 10;
+  int _countdownValue = _countdownDuration;
+  bool _isCountingDown = false;
+  StreamSubscription<int>? _countdownSub;
+
+  void _startCountdown() {
+    _countdownSub?.cancel();
+    setState(() {
+      _countdownValue = _countdownDuration;
+      _isCountingDown = true;
+    });
+    _countdownSub = _countdownDuration.seconds.countdownStream().listen(
+      (value) {
+        setState(() => _countdownValue = value);
+        if (value == 0) setState(() => _isCountingDown = false);
+      },
+      onDone: () => setState(() => _isCountingDown = false),
+    );
+  }
+
+  void _cancelCountdown() {
+    _countdownSub?.cancel();
+    setState(() {
+      _isCountingDown = false;
+      _countdownValue = _countdownDuration;
+    });
+  }
+
+  @override
+  void dispose() {
+    _countdownSub?.cancel();
+    super.dispose();
+  }
 
   Future<void> _runSleep() async {
     setState(() {
@@ -225,8 +262,52 @@ class _HomePageState extends State<HomePage> {
               _Row('"yy"', formatDate(now, 'yy')),
             ],
           ),
+          const SizedBox(height: 12),
+
+          // ─── Countdown ──────────────────────────────────
+          _SectionCard(
+            icon: Icons.timer_outlined,
+            title: 'Countdown',
+            children: [
+              const Text(
+                '10.seconds.countdownStream().listen((value) { ... })',
+                style: TextStyle(fontFamily: 'monospace', fontSize: 12),
+              ),
+              const SizedBox(height: 16),
+              Center(
+                child: Text(
+                  '$_countdownValue',
+                  style: TextStyle(
+                    fontSize: 64,
+                    fontWeight: FontWeight.bold,
+                    color: _countdownValue <= 3
+                        ? Colors.redAccent
+                        : _countdownValue <= 6
+                            ? Colors.orangeAccent
+                            : Colors.greenAccent,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: _isCountingDown ? null : _startCountdown,
+                    icon: const Icon(Icons.play_arrow),
+                    label: const Text('Start'),
+                  ),
+                  const SizedBox(width: 12),
+                  OutlinedButton.icon(
+                    onPressed: _isCountingDown ? _cancelCountdown : null,
+                    icon: const Icon(Icons.stop),
+                    label: const Text('Cancel'),
+                  ),
+                ],
+              ),
+            ],
+          ),
           const SizedBox(height: 24),
-          Text(timeAgo(DateTime.parse('2026-03-25T11:00:00'), numeric: false))
         ],
       ),
     );

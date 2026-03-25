@@ -154,14 +154,13 @@ class TimeAgoFormatter {
     final reference = now ?? DateTime.now();
     final diff = reference.difference(date);
     final isFuture = diff.isNegative;
-    
+
     // Add 1 second of padding for future dates to overcome the microsecond
     // decay that occurs between multiple `DateTime.now()` evaluations.
-    final abs = diff.abs() + (isFuture ? const Duration(seconds: 1) : Duration.zero);
+    final abs =
+        diff.abs() + (isFuture ? const Duration(seconds: 1) : Duration.zero);
 
-    return short
-        ? _short(abs, isFuture)
-        : _long(abs, isFuture, numeric);
+    return short ? _short(abs, isFuture) : _long(abs, isFuture, numeric);
   }
 
   // ── Long format ─────────────────────────────────────────────────────────
@@ -209,7 +208,9 @@ class TimeAgoFormatter {
     if (days < 30) {
       final weeks = (days / 7).floor();
       if (!numeric && weeks == 1) {
-        return isFuture ? TimeAgoStrings.inWeeks(1) : TimeAgoStrings.weeksAgo(1);
+        return isFuture
+            ? TimeAgoStrings.inWeeks(1)
+            : TimeAgoStrings.weeksAgo(1);
       }
       return isFuture
           ? TimeAgoStrings.inWeeks(weeks)

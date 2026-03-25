@@ -13,9 +13,9 @@ A lightweight Flutter package that provides **Duration extensions**, **DateTime 
 |---------|-------------|
 | `int` extensions | `5.seconds`, `10.minutes`, `2.hours`, `3.days` |
 | `Duration` extensions | `duration.sleep()`, `duration.formatted` |
-| `DateTime` extensions | `format()`, `isToday`, `isYesterday`, `isTomorrow`, `startOfDay`, `endOfDay`, `timeAgo()` |
+| `DateTime` extensions | `format()`, `isToday`, `isYesterday`, `isTomorrow`, `startOfDay`, `endOfDay`, `timeAgo`, `timeAgoShort` |
 | `formatDate()` | Zero-dependency formatter with 14 tokens |
-| `timeAgo()` | Human-readable relative time strings |
+| `timeAgo(date)` | Top-level function for relative time strings |
 | `formatDuration()` | Compact duration strings like `"2m 5s"` |
 
 ---
@@ -59,7 +59,12 @@ final d4 = 3.days;        // Duration(days: 3)
 // Delay execution
 await 2.seconds.sleep();
 
-// Human-readable string
+// Relative time from Duration
+print(5.minutes.ago);         // "5 minutes ago"
+print(3.days.fromNow);        // "in 3 days"
+print(2.hours.agoShort);      // "2h"
+
+// Human-readable generic string
 print(125.seconds.formatted); // "2m 5s"
 print(2.hours.formatted);     // "2h"
 ```
@@ -88,8 +93,10 @@ print(now.startOfDay);  // 2026-03-25 00:00:00.000
 print(now.endOfDay);    // 2026-03-25 23:59:59.999
 
 // Relative time
-print(now.subtract(2.minutes).timeAgo());  // "2 minutes ago"
-print(now.subtract(1.days).timeAgo());     // "yesterday"
+print(now.subtract(2.minutes).timeAgo);         // "2 minutes ago"
+print(now.subtract(1.days).timeAgo);            // "1 day ago"
+print(now.subtract(3.hours).timeAgoShort);      // "3h"
+print(now.add(5.minutes).timeAgo);              // "in 5 minutes"
 ```
 
 ---
@@ -132,13 +139,17 @@ import 'package:flutter_time_utils/flutter_time_utils.dart';
 
 final now = DateTime.now();
 
-print(getTimeAgo(now.subtract(Duration(seconds: 3))));   // "just now"
-print(getTimeAgo(now.subtract(Duration(minutes: 2))));   // "2 minutes ago"
-print(getTimeAgo(now.subtract(Duration(hours: 1))));     // "1 hour ago"
-print(getTimeAgo(now.subtract(Duration(days: 1))));      // "yesterday"
-print(getTimeAgo(now.subtract(Duration(days: 3))));      // "3 days ago"
-print(getTimeAgo(now.subtract(Duration(days: 10))));     // "1 week ago"
-print(getTimeAgo(now.add(Duration(minutes: 5))));        // "in 5 minutes"
+print(timeAgo(now.subtract(3.seconds)));   // "Just now"
+print(timeAgo(now.subtract(2.minutes)));   // "2 minutes ago"
+print(timeAgo(now.subtract(1.hours)));     // "1 hour ago"
+print(timeAgo(now.subtract(1.days)));      // "1 day ago"
+print(timeAgo(now.subtract(3.days)));      // "3 days ago"
+print(timeAgo(now.subtract(10.days)));     // "1 week ago"
+print(timeAgo(now.add(5.minutes)));        // "in 5 minutes"
+
+// Short and numeric formats
+print(timeAgo(now.subtract(5.minutes), short: true));    // "5m"
+print(timeAgo(now.subtract(1.days), numeric: false));    // "Yesterday"
 ```
 
 ---
