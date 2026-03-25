@@ -3,7 +3,7 @@ description: >-
   A lightweight Flutter package providing Duration extensions (5.seconds, 2.hours),
   DateTime helpers (isToday, format, timeAgo), a zero-dependency date formatter,
   relative time strings, and compact duration formatting.
-version: 1.1.1
+version: 1.1.2
 
 repository: https://github.com/DevSalmanCodes/flutter_time_utils
 issue_tracker: https://github.com/DevSalmanCodes/flutter_time_utils/issues
